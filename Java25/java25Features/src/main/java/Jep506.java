@@ -3,43 +3,41 @@
 
 public class Jep506 {
 
-    public class ContextoUsuario {
+    public class UserContext {
 
-        private static final ScopedValue<String> USUARIO_LOGADO = ScopedValue.newInstance();
+        private static final ScopedValue<String> loggedUser = ScopedValue.newInstance();
 
-        public static void executarComUsuario(String nomeUsuario, Runnable action) {
-            ScopedValue.where(USUARIO_LOGADO, nomeUsuario).run(action);
+        public static void runWithUser(String userName, Runnable action) {
+            ScopedValue.where(loggedUser, userName).run(action);
         }
 
-        public static String getUsuarioLogado() {
-            return USUARIO_LOGADO.get();
+        public static String getLoggedUser() {
+            return loggedUser.get();
         }
     }
 
-    public static class ServicePedido {
-        public void processarPedido() {
-            // Define o usuário no escopo
-            ContextoUsuario.executarComUsuario("lee22br", () -> {
-                criarPedido();
-            });
+    public static class OrderService {
+        public void orderProcess() {
+            // Define user scope
+            UserContext.runWithUser("lee22br", this::createOrder);
         }
 
-        private void criarPedido() {
-            // Em qualquer lugar conseguimos o usuário sem passar parâmetro
-            String usuario = ContextoUsuario.getUsuarioLogado();
-            System.out.println("Pedido criado por: " + usuario);
+        private void createOrder() {
+            // On anywhere, we can access user
+            String user = UserContext.getLoggedUser();
+            System.out.println("Order created by: " + user);
 
-            salvarNoBanco();
+            storeDb();
         }
 
-        private void salvarNoBanco() {
-            String usuario = ContextoUsuario.getUsuarioLogado();
-            System.out.println("Salvando no banco para: " + usuario);
+        private void storeDb() {
+            String usuario = UserContext.getLoggedUser();
+            System.out.println("Saving in DB for: " + usuario);
         }
 
         public static void main (){
-            ServicePedido sp = new ServicePedido();
-            sp.processarPedido();
+            OrderService sp = new OrderService();
+            sp.orderProcess();
         }
     }
 }
