@@ -8,7 +8,7 @@ public class PrimitiveTypesPattern {
         Object obj = 28;
 
         if (obj instanceof int i) {
-            System.out.println("This Object is Integer: "+i);
+            System.out.println("This Object is int: "+i);
         }
     }
 }
