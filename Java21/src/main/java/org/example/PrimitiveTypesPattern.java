@@ -10,5 +10,11 @@ public class PrimitiveTypesPattern {
         if (obj instanceof int i) {
             System.out.println("This Object is int: "+i);
         }
+
+        switch (obj) {
+            case int i -> System.out.println("int: "+i);
+            case double d -> System.out.println("double: "+d);
+            default -> System.out.println("Other Type: ");
+        }
     }
 }
