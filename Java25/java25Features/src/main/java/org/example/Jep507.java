@@ -11,9 +11,12 @@ public class Jep507 {
             System.out.println("This Object is int: "+i);
         }
 
+        obj = 3.1475;
+
         switch (obj) {
             case int i -> System.out.println("int: "+i);
             case double d -> System.out.println("double: "+d);
+            case boolean b -> System.out.println("boolean: "+b);
             default -> System.out.println("Other Type: ");
         }
     }
