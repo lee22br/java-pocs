@@ -1,5 +1,6 @@
-public class Jep507 {
+package org.example;
 
+public class PrimitiveTypesPattern {
 
     public static void main (String[] args){
         System.out.println("Test Primitive Types Patterns");
