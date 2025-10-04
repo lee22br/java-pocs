@@ -7,14 +7,14 @@ public class PrimitiveTypesPattern {
 
         Object obj = 28;
 
-        if (obj instanceof int i) {
+        if (obj instanceof Integer i) {
             System.out.println("This Object is int: "+i);
         }
 
         switch (obj) {
-            case int i -> System.out.println("int: "+i);
-            case double d -> System.out.println("double: "+d);
-            default -> System.out.println("Other Type: ");
+            case Integer i -> System.out.println("int: "+i);
+            case Double d -> System.out.println("double: "+d);
+            //default -> System.out.println("Other Type: ");
         }
     }
 }
