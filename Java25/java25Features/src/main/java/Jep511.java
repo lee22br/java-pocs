@@ -1,7 +1,6 @@
 
 import module java.sql;
 
-
 public class Jep511 {
 
     public static void main(String[] args) throws SQLException {
