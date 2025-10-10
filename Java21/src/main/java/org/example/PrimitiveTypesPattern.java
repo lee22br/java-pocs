@@ -14,7 +14,7 @@ public class PrimitiveTypesPattern {
         switch (obj) {
             case Integer i -> System.out.println("int: "+i);
             case Double d -> System.out.println("double: "+d);
-            //default -> System.out.println("Other Type: ");
+            default -> System.out.println("Other Type: ");
         }
     }
 }
