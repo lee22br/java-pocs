@@ -20,9 +20,7 @@ public class Jep510 {
                 HKDFParameterSpec.ofExtract()
                         .addIKM(initialKeyMaterial)
                         .addSalt(salt).thenExpand(info, 32);
-
 // Derive a 32-byte AES key
-
             SecretKey key = hkdf.deriveKey("AES", params);
             System.out.println("Key Alg: "+key.getAlgorithm());
             System.out.println("Key Format: "+key.getFormat());
@@ -31,6 +29,5 @@ public class Jep510 {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

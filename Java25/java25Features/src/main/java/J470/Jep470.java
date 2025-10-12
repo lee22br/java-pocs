@@ -15,7 +15,6 @@ public class Jep470 {
             String pem = encodeToPem("PUBLIC KEY", keyPair.getPublic().getEncoded());
             System.out.println("pem: "+pem);
 
-
             String base64 = pem.replaceAll("-----.*-----", "").replaceAll("\\s", "");
             byte[] keyBytes = Base64.getDecoder().decode(base64);
 

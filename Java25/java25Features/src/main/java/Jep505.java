@@ -3,6 +3,7 @@ import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.StructuredTaskScope.Subtask;
 
 public class Jep505 {
+
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         // Scenario: Fetching user details and their linked accounts concurrently.
         // If either subtask fails, the entire operation should fail.
