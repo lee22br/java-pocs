@@ -1,6 +1,6 @@
 package org.example;
 
-public class Jep507 {
+public class PrimitivePattern {
 
     public static void main (String[] args) {
         System.out.println("Test Primitive Types Patterns");
@@ -30,6 +30,6 @@ public class Jep507 {
     }
 
     public static int getStatus() {
-        return 8;
+        return 12;
     }
 }
