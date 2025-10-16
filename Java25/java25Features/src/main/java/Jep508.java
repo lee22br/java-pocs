@@ -24,14 +24,14 @@ public class Jep508 {
                     .neg();
             vc.intoArray(c, i);
         }
-        for (; i < a.length; i++) {
-            c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
-            System.out.println("Result SPECIES: " + c[i]);
+        System.out.println("i: "+upperBound);
+        for (float v : c) {
+            System.out.println("Result SPECIES: " + v);
         }
     }
     void main(){
-        float[] a = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, };
-        float[] b = {2.0f, 3.0f, 4.0f, 5.0f, 6.0f, };
+        float[] a = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f };
+        float[] b = {2.0f, 3.0f, 4.0f, 5.0f, 6.0f};
         float[] c = new float[a.length];
         this.scalarComputation(a, b, c);
         this.vectorComputation(a, b, c);

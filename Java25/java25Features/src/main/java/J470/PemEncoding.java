@@ -5,7 +5,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-public class Jep470 {
+public class PemEncoding {
 
     static void main(String[] args) {
         try {

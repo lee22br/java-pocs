@@ -1,10 +1,10 @@
 
 //Estudar mais
 
+
 public class Jep506 {
 
     public class UserContext {
-
         private static final ScopedValue<String> loggedUser = ScopedValue.newInstance();
 
         public static void runWithUser(String userName, Runnable action) {
@@ -15,7 +15,6 @@ public class Jep506 {
             return loggedUser.get();
         }
     }
-
     public static class OrderService {
         public void orderProcess() {
             // Define user scope
@@ -26,18 +25,19 @@ public class Jep506 {
             // On anywhere, we can access user
             String user = UserContext.getLoggedUser();
             System.out.println("Order created by: " + user);
-
-            storeDb();
+            UserContext.runWithUser("adminDB", this::storeDb);
+            System.out.println("User now: "+UserContext.getLoggedUser());
         }
 
         private void storeDb() {
-            String usuario = UserContext.getLoggedUser();
-            System.out.println("Saving in DB for: " + usuario);
+            String user = UserContext.getLoggedUser();
+            System.out.println("Saving in DB for: " + user);
         }
 
         public static void main (){
             OrderService sp = new OrderService();
             sp.orderProcess();
+
         }
     }
 }
