@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 })
 public class VectorApi {
 
-    @Param({ "32", "64", "128", "512"})
+    @Param({ "8","16","32", "64", "128", "512"})
     int arraySize;
 
     float[] a ;
