@@ -34,9 +34,9 @@ public class PemEncoding {
     private static String encodeToPem(String type, byte[] data) {
         String base64 = Base64.getMimeEncoder(64, System.lineSeparator().getBytes())
                 .encodeToString(data);
-        return "-----BEGIN " + type + "-----" + System.lineSeparator() +
+        return "-------BEGIN " + type + "-------" + System.lineSeparator() +
                 base64 + System.lineSeparator() +
-                "-----END " + type + "-----";
+                "-------END " + type + "-------";
     }
 }
 
