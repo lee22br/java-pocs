@@ -21,5 +21,19 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+      <!-- JMH Core -->
+      <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core</artifactId>
+          <version>1.37</version>
+      </dependency>
+
+      <!-- JMH Annotations (required for using JMH annotations) -->
+      <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-annprocess</artifactId>
+          <version>1.37</version>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
 </project>
