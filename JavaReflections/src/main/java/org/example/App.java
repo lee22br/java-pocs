@@ -7,6 +7,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
@@ -18,10 +20,12 @@ import java.util.concurrent.TimeUnit;
 })
 public class App 
 {
-    @Param({ "8", "16" })
+    @Param({ "16", "64", "512", "1024" })
     int arraySize;
     Class<?>[] arrayClass;
     Person[] arrayPerson;
+    private static final Map<String, Class> cacheClass = new HashMap<>();
+    private static final Map<String, Field> cacheField = new HashMap<>();
 
     @Setup(Level.Trial)
     public void setup() {
@@ -49,6 +53,27 @@ public class App
             arrayPerson[i].setName("Test"+i);
             arrayPerson[i].setAge(i);
         }
+    }
+
+    @Benchmark
+    public void reflecTionsClassCached() throws InstantiationException, IllegalAccessException, NoSuchFieldException {
+        for (int i = 0; i < arraySize; i++) {
+            arrayClass[i] = getClassCached(Person.class, "Person");
+            Object person = arrayClass[i].newInstance();
+            Field nameField = getFieldCached(Person.class, "name");
+            nameField.set(person,"Test"+i);
+            Field ageField = getFieldCached(Person.class, "age");
+            ageField.set(person,i);
+        }
+    }
+
+    private static Class getClassCached(Class<?> classReflec, String classKey)  {
+        return cacheClass.computeIfAbsent(classKey, k -> classReflec);
+    }
+
+    private static Field getFieldCached(Class<?> classReflec, String fieldKey) throws NoSuchFieldException {
+        Field fieldRet = classReflec.getDeclaredField(fieldKey);
+        return cacheField.computeIfAbsent(fieldKey, k -> fieldRet );
     }
 
     public static void main(String[] args) throws RunnerException {
