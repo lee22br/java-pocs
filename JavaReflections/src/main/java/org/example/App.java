@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 })
 public class App 
 {
-    @Param({ "16", "64", "512", "1024" })
+    @Param({ "16", "64", "512" })
     int arraySize;
     Class<?>[] arrayClass;
     Person[] arrayPerson;
@@ -68,12 +68,21 @@ public class App
     }
 
     private static Class getClassCached(Class<?> classReflec, String classKey)  {
-        return cacheClass.computeIfAbsent(classKey, k -> classReflec);
+        Class classRet = cacheClass.get(classKey);
+        if (null == classRet) {
+            classRet = classReflec;
+            cacheClass.put(classKey,classRet);
+        }
+        return  classRet;
     }
 
     private static Field getFieldCached(Class<?> classReflec, String fieldKey) throws NoSuchFieldException {
-        Field fieldRet = classReflec.getDeclaredField(fieldKey);
-        return cacheField.computeIfAbsent(fieldKey, k -> fieldRet );
+        Field fieldRet =cacheField.get(fieldKey);
+        if (null == fieldRet) {
+            fieldRet = classReflec.getDeclaredField(fieldKey);
+            cacheField.put(fieldKey,fieldRet);
+        }
+        return fieldRet;
     }
 
     public static void main(String[] args) throws RunnerException {

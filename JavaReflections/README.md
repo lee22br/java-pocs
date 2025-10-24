@@ -8,9 +8,14 @@ Array Person instantiate normally
 
 
 ## Results
-| Benchmark | (arraySize) | Mode | Cnt |   Score   | Error | Units |
-| :--- | :--- | :--- | :--- |---------:| --- | :--- |
-| App.instances | 8 | avgt | (N/A) |  136,675  | (N/A) | ns/op |
-| App.instances | 16 | avgt | (N/A) |  288,489  | (N/A) | ns/op |
-| App.reflections | 8 | avgt | (N/A) | 5797,649  | (N/A) | ns/op |
-| App.reflections | 16 | avgt | (N/A) | 11853,550 | (N/A) | ns/op |
+| Benchmark | (arraySize) | Mode | Cnt |      Score | Error | Units |
+| :--- | :--- | :--- | :--- |-----------:| :--- | :--- |
+| App.instances | 16 | avgt | (N/A) |    275,452 | (N/A) | ns/op |
+| App.instances | 64 | avgt | (N/A) |   1084,038 | (N/A) | ns/op |
+| App.instances | 512 | avgt | (N/A) |   9185,122 | (N/A) | ns/op |
+| App.reflecTionsClassCached | 16 | avgt | (N/A) |    981,613 | (N/A) | ns/op |
+| App.reflecTionsClassCached | 64 | avgt | (N/A) |   3916,465 | (N/A) | ns/op |
+| App.reflecTionsClassCached | 512 | avgt | (N/A) |  32843,650 | (N/A) | ns/op |
+| App.reflections | 16 | avgt | (N/A) |  11511,815 | (N/A) | ns/op |
+| App.reflections | 64 | avgt | (N/A) |  45126,259 | (N/A) | ns/op |
+| App.reflections | 512 | avgt | (N/A) | 364681,292 | (N/A) | ns/op |
