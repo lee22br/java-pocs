@@ -76,6 +76,8 @@ public class VectorApi {
         bh.consume(vectorComputation(a,b,c));
     }
 
+    
+
     void main() throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(VectorApi.class.getSimpleName())

@@ -67,6 +67,10 @@ public class App
         }
     }
 
+    public void reflectionHandleClass(){
+        //TODO
+    }
+
     private static Class getClassCached(Class<?> classReflec, String classKey)  {
         Class classRet = cacheClass.get(classKey);
         if (null == classRet) {
