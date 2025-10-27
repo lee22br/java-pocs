@@ -2,13 +2,11 @@ package org.example;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 })
 public class App 
 {
-    @Param({ "16", "64", "512" })
+    @Param({ "16", "64" })
     int arraySize;
     Class<?>[] arrayClass;
     Person[] arrayPerson;
@@ -70,16 +68,36 @@ public class App
         }
     }
 
-    public static void reflectionHandleClass() throws Throwable {
+    @Benchmark
+    public void reflectionHandleMethod() throws Throwable {
         MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodType mt = MethodType.methodType(Void.class);
-        MethodHandle staticMH = lookup.findStaticGetter(
-                Person.class, // Classe
+        MethodHandle getterNameMH = lookup.findGetter(
+                Person.class,
                 "name",
                 String.class
         );
-                String result = (String) staticMH.invoke();
-                System.out.println(result);
+        MethodHandle getterAgeMH = lookup.findGetter(
+                Person.class,
+                "age",
+                int.class
+        );
+        MethodHandle setterNameMH = lookup.findSetter(
+                Person.class,
+                "name",
+                String.class
+        );
+        MethodHandle setterAgeMH = lookup.findSetter(
+                Person.class,
+                "age",
+                int.class
+        );
+        for (int i = 0; i < arraySize; i++) {
+            Object person = arrayClass[i].newInstance();
+            String name = (String) getterNameMH.invoke((Person)person);
+            setterNameMH.invoke((Person)person, "Test"+i);
+            int age = (Integer)getterAgeMH.invoke((Person)person);
+            setterAgeMH.invoke((Person)person,i);
+        }
     }
 
     private static Class getClassCached(Class<?> classReflec, String classKey)  {
@@ -101,15 +119,13 @@ public class App
     }
 
     public static void main(String[] args) throws Throwable {
-//        Options opt = new OptionsBuilder()
-//                .include(App.class.getSimpleName())
-//                .warmupIterations(0)
-//                .measurementIterations(1)
-//                .forks(1)
-//                .threads(1)
-//                .build();
-//        new Runner(opt).run();
-        Person p = new Person("Leandro",112);
-        reflectionHandleClass();
+        Options opt = new OptionsBuilder()
+                .include(App.class.getSimpleName())
+                .warmupIterations(0)
+                .measurementIterations(1)
+                .forks(1)
+                .threads(1)
+                .build();
+        new Runner(opt).run();
     }
 }
