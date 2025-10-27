@@ -6,6 +6,9 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +70,16 @@ public class App
         }
     }
 
-    public void reflectionHandleClass(){
-        //TODO
+    public static void reflectionHandleClass() throws Throwable {
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        MethodType mt = MethodType.methodType(Void.class);
+        MethodHandle staticMH = lookup.findStaticGetter(
+                Person.class, // Classe
+                "name",
+                String.class
+        );
+                String result = (String) staticMH.invoke();
+                System.out.println(result);
     }
 
     private static Class getClassCached(Class<?> classReflec, String classKey)  {
@@ -89,14 +100,16 @@ public class App
         return fieldRet;
     }
 
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(App.class.getSimpleName())
-                .warmupIterations(0)
-                .measurementIterations(1)
-                .forks(1)
-                .threads(1)
-                .build();
-        new Runner(opt).run();
+    public static void main(String[] args) throws Throwable {
+//        Options opt = new OptionsBuilder()
+//                .include(App.class.getSimpleName())
+//                .warmupIterations(0)
+//                .measurementIterations(1)
+//                .forks(1)
+//                .threads(1)
+//                .build();
+//        new Runner(opt).run();
+        Person p = new Person("Leandro",112);
+        reflectionHandleClass();
     }
 }
