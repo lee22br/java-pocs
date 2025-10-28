@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 })
 public class App 
 {
-    @Param({ "16", "64" })
+    @Param({ "16", "64", "512" })
     int arraySize;
     Class<?>[] arrayClass;
     Person[] arrayPerson;
@@ -48,7 +48,7 @@ public class App
     }
 
     @Benchmark
-    public void instances() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+    public void instances()  {
         for (int i = 0; i < arraySize; i++) {
             arrayPerson[i] = new Person();
             arrayPerson[i].setName("Test"+i);
@@ -69,18 +69,18 @@ public class App
     }
 
     @Benchmark
-    public void reflectionHandleMethod() throws Throwable {
+    public void reflectionMethodHandle() throws Throwable {
         MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodHandle getterNameMH = lookup.findGetter(
-                Person.class,
-                "name",
-                String.class
-        );
-        MethodHandle getterAgeMH = lookup.findGetter(
-                Person.class,
-                "age",
-                int.class
-        );
+//        MethodHandle getterNameMH = lookup.findGetter(
+//                Person.class,
+//                "name",
+//                String.class
+//        );
+//        MethodHandle getterAgeMH = lookup.findGetter(
+//                Person.class,
+//                "age",
+//                int.class
+//        );
         MethodHandle setterNameMH = lookup.findSetter(
                 Person.class,
                 "name",
@@ -92,10 +92,9 @@ public class App
                 int.class
         );
         for (int i = 0; i < arraySize; i++) {
+            arrayClass[i] = Person.class;
             Object person = arrayClass[i].newInstance();
-            String name = (String) getterNameMH.invoke((Person)person);
             setterNameMH.invoke((Person)person, "Test"+i);
-            int age = (Integer)getterAgeMH.invoke((Person)person);
             setterAgeMH.invoke((Person)person,i);
         }
     }
