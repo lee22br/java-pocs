@@ -1,0 +1,14 @@
+#set( $dateTime = $date )
+--------------------------------------
+Report Hello World using Apache Velocity
+Date Time: $dateTime
+--------------------------------------
+
+Hi, **$name**!
+Welcome to the world of Velocity reports.
+
+You have $numMsg new messages.
+
+This is a simple demonstration of how to merge Java data with a template.
+
+See you later!
