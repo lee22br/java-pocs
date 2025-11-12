@@ -1,0 +1,24 @@
+@startuml Diagram
+        title Class Diagram
+
+        abstract class Person {
+          - name : String
+          - email : String
+          + getName() : String
+          + showInfo() : void
+        }
+        class Client {
+          - address : String
+          + getAddress() : String
+        }
+        class Order {
+          - id : int
+          - totalValue : double
+          + getTotalValue() : double
+        }
+
+        ' Relations
+        Person <|-- Client : Heritage
+        Client "1" o-- "*" Order : Agregation + // 1 Client has * Orders
+
+@enduml
