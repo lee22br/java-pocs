@@ -38,6 +38,11 @@ public class App
         }
     }
 
+    public String getCmdApi(){
+        return "Based on the classes in the model package, generate the .puml file.";
+
+    }
+
     static void main(String[] args)
     {
         App app = new App();
@@ -46,4 +51,6 @@ public class App
         String output = file + "_uml";
         app.generateDiagramFromFile(file, output);
     }
+
+
 }
