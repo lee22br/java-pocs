@@ -1,8 +1,5 @@
 package model;
 
-import ch.ifocusit.livingdoc.annotations.UbiquitousLanguage;
-
-@UbiquitousLanguage(id = 200)
 public class Person {
     private String name;
     private String email;
