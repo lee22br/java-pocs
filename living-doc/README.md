@@ -10,7 +10,7 @@ Using the [living-documentation](https://github.com/jboz/living-documentation/) 
 
 This diagram illustrates the structure of the **Order**, **Person**, and **Client** classes, showing their attributes, methods, and the relationships between them.
 
-![alt text](https://github.com/lee22br/java-pocs/tree/main/living-doc/diagram.png)
+![alt text](https://raw.githubusercontent.com/lee22br/java-pocs/refs/heads/main/living-doc/diagram.png)
 
 
 ---
