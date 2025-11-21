@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <livingdoc.output>${project.basedir}</livingdoc.output>
+      <livingdoc.output>${project.basedir} </livingdoc.output>
       <livingdoc.phase>prepare-package</livingdoc.phase>
   </properties>
   <dependencies>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>ch.ifocusit.livingdoc</groupId>
                 <artifactId>livingdoc-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>2.16</version>
                 <executions>
                     <execution>
                         <id>class-diagram</id>
