@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <livingdoc.output>${project.build.directory}/generated-docs</livingdoc.output>
+      <livingdoc.output>${project.basedir}</livingdoc.output>
       <livingdoc.phase>prepare-package</livingdoc.phase>
   </properties>
   <dependencies>
