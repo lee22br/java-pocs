@@ -8,6 +8,7 @@ public class ConsumerJMS {
     public static void main(String[] args) {
         Connection connection = null;
         Session session = null;
+        MessageConsumer consumer = null;
 
         try {
             InitialContext context = new InitialContext();
@@ -18,30 +19,37 @@ public class ConsumerJMS {
 
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            Destination queue = (Destination) context.lookup("queue/TEST.QUEUE");
-            MessageConsumer consumer = session.createConsumer(queue);
+            Destination queue = (Destination) context.lookup("TEST.QUEUE");
+            consumer = session.createConsumer(queue);
 
-            System.out.println("Waiting for messages on the queue...");
+            System.out.println("Waiting for messages on the ActiveMQ queue (Loop)...");
 
-            Message message = consumer.receive(5000);
+            while (true) {
+                Message message = consumer.receive(15000);
 
-            if (message instanceof TextMessage) {
-                TextMessage textMessage = (TextMessage) message;
-                String text = textMessage.getText();
-                System.out.println("📩 Message received: " + text);
-            } else if (message == null) {
-                System.out.println("🚫 No message received after timeout.");
+                if (message instanceof TextMessage) {
+                    TextMessage textMessage = (TextMessage) message;
+                    String text = textMessage.getText();
+                    System.out.println("📩 Message received: " + text);
+                } else if (message == null) {
+                    // After 5 seconds, no message was present, so the loop continues
+                    System.out.println("⏳ No messages for 5s. Still waiting...");
+                }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // This finally block only executes if an exception interrupts the loop (or the program is manually terminated)
+            if (consumer != null) {
+                try { consumer.close(); } catch (JMSException e) { e.printStackTrace(); }
+            }
             if (session != null) {
                 try { session.close(); } catch (JMSException e) { e.printStackTrace(); }
             }
             if (connection != null) {
                 try { connection.close(); } catch (JMSException e) { e.printStackTrace(); }
             }
+            System.out.println("Consumer shut down.");
         }
     }
 }

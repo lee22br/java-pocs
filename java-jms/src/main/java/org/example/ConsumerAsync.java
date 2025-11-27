@@ -3,9 +3,10 @@ package org.example;
 import jakarta.jms.*;
 
 import javax.naming.InitialContext;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-public class ProducerJMS {
-
+public class ConsumerAsync {
     public static void main(String[] args) {
         Connection connection = null;
         Session session = null;
@@ -20,30 +21,27 @@ public class ProducerJMS {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             Destination queue = (Destination) context.lookup("TEST.QUEUE");
-            MessageProducer producer = session.createProducer(queue);
+            MessageConsumer consumer = session.createConsumer(queue);
 
-            TextMessage message = session.createTextMessage("Hello, 29");
-            producer.send(message);
+            consumer.setMessageListener(new MyMsgListener());
 
-            System.out.println("✅ Message sent: " + message.getText());
+            System.out.println("Waiting for messages on the ActiveMQ queue (Asynchronous)...");
+            System.out.println("Press ENTER to shut down the consumer.");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            reader.readLine();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // Closes resources
             if (session != null) {
-                try {
-                    session.close();
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
+                try { session.close(); } catch (JMSException e) { e.printStackTrace(); }
             }
             if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
+                try { connection.close(); } catch (JMSException e) { e.printStackTrace(); }
             }
+            System.out.println("Consumer shut down.");
         }
     }
 }
