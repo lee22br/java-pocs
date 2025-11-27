@@ -21,5 +21,15 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>jakarta.jms</groupId>
+          <artifactId>jakarta.jms-api</artifactId>
+          <version>3.0.0</version> <!-- Or a later compatible version -->
+      </dependency>
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-client</artifactId>
+          <version>5.18.3</version>
+      </dependency>
   </dependencies>
 </project>
