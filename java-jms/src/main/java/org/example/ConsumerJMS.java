@@ -31,7 +31,7 @@ public class ConsumerJMS {
                     TextMessage textMessage = (TextMessage) message;
                     String text = textMessage.getText();
                     System.out.println("📩 Message received: " + text);
-                } else if (message == null) {
+                } else if (null == message) {
                     // After 5 seconds, no message was present, so the loop continues
                     System.out.println("⏳ No messages for 5s. Still waiting...");
                 }

@@ -36,7 +36,7 @@ public class ProducerJMS {
             while (true) {
                 System.out.print("\nEnter your message: ");
                 inputLine = reader.readLine();
-                if (inputLine == null || inputLine.trim().equalsIgnoreCase("exit")) {
+                if (null == inputLine  || inputLine.trim().equalsIgnoreCase("exit")) {
                     break;
                 }
                 if (inputLine.trim().isEmpty()) {
