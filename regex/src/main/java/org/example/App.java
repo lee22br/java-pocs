@@ -11,7 +11,7 @@ public class App
 {
     private static final Pattern PO_BOX_PATTERN = Pattern.compile(
             "\\s+PO\\s+BOX$" +
-                    "P\\.O|" +
+                    "P\\.O\\.|" +
                     "RR\\s+BOX|"+
                     "PO\\s+BOX",
             Pattern.CASE_INSENSITIVE
@@ -37,7 +37,7 @@ public class App
 
         //Tests
         String [] addresses = {
-                "123 Main Street PO BOX",
+                "123 Main Street P.O 4 BOX",
                 "456 Elm P.O. Box 123",
                 "789 Oak RR BOX 45",
                 "321 Pine PO BOX 789",
