@@ -22,7 +22,7 @@ public class AppTest
     }
 
     @Test
-    public void test(){
+    public void testPow(){
         MathOperation multiplication = Math::pow;
 
         assertEquals(16, multiplication.execute(2,4));
