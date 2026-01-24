@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,10 +27,12 @@ public class AppTest {
         String name = appProps.getProperty("name", "defaultName");
         String date = appProps.getProperty("date", "1982-04-28");
         String appDownloadAddr = appProps.getProperty("downloadAddr");
+        String[] x = appProps.getProperty("list").split(",");
 
         assertEquals("1.0", version);
         assertEquals("TestApp", name);
         assertEquals("2016-11-12", date);
+        assertEquals(6, x.length);
         assertNull(appDownloadAddr);
     }
 
