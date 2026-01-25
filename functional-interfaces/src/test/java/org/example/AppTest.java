@@ -2,13 +2,13 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 import static org.example.FunctionUtil.listCombiner;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class AppTest 
@@ -42,6 +42,27 @@ public class AppTest
         List<String> result = listCombiner(list1, list2, (letter, number) -> letter + number);
 
         assertTrue(result.containsAll(list3));
+    }
+
+    @Test
+    void testLoginValidatorWithBiPredicate() {
+        BiPredicate<String, String> loginValidator = (user, pass) ->
+                "admin".equals(user) && "1234".equals(pass);
+
+        // Assertions
+        assertTrue(loginValidator.test("admin", "1234"));
+        assertFalse(loginValidator.test("admin", "wrong_pass"));
+        assertFalse(loginValidator.test("guest", "1234"));
+    }
+
+    @Test
+    void testNameFormatterWithBiFunction() {
+        BiFunction<String, String, String> formatter = (name, role) ->
+                String.format("%s (%s)", name.toUpperCase(), role);
+
+        String result = formatter.apply("Alice", "Manager");
+
+        assertEquals("ALICE (Manager)", result);
     }
 
 }
