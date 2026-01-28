@@ -4,65 +4,79 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import static org.example.FunctionUtil.listCombiner;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class AppTest 
 {
     @Test
-    public void testAdd(){
-        MathOperation addition = (a,b) -> a + b;
+    void testFilterAndPredicates() {
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David", "Edward");
 
-        assertEquals(2, addition.execute(1,1));
+        Predicate<String> startsWithCD = name -> name.startsWith("C") || name.startsWith("D");
+        List<String> filtered = names.stream()
+                .filter(startsWithCD)
+                .collect(Collectors.toList());
+
+        assertEquals(2, filtered.size());
+        assertTrue(filtered.contains("Charlie"));
+        assertFalse(filtered.contains("Alice"));
     }
 
     @Test
-    public void testMultiply(){
-        MathOperation multiplication = (a,b) -> a * b;
+    void testMapTransformation() {
+        List<String> numbers = Arrays.asList("1", "2", "3");
 
-        assertEquals(4, multiplication.execute(2,2));
+        List<Integer> squares = numbers.stream()
+                .map(Integer::parseInt)
+                .map(n -> n * n)
+                .collect(Collectors.toList());
+
+        List<Integer> expected = Arrays.asList(1, 4, 9);
+        assertEquals(expected, squares);
     }
 
     @Test
-    public void testPow(){
-        MathOperation multiplication = Math::pow;
+    void testArrayToStream() {
+        Integer[] numArray = {10, 20, 30, 40};
 
-        assertEquals(16, multiplication.execute(2,4));
-    }
+        int sum = Arrays.stream(numArray)
+                .mapToInt(Integer::intValue)
+                .sum();
 
-    @Test void testBifunctional(){
-        List<String> list1 = Arrays.asList("a", "b", "c");
-        List<Integer> list2 = Arrays.asList(1, 2, 3);
-        List<String> list3 = Arrays.asList("a1", "b2", "c3");
-
-        List<String> result = listCombiner(list1, list2, (letter, number) -> letter + number);
-
-        assertTrue(result.containsAll(list3));
+        assertEquals(100, sum);
     }
 
     @Test
-    void testLoginValidatorWithBiPredicate() {
-        BiPredicate<String, String> loginValidator = (user, pass) ->
-                "admin".equals(user) && "1234".equals(pass);
+    void testListToMapConversion() {
+        List<String> fruitList = Arrays.asList("Apple", "Banana", "Cherry");
 
-        // Assertions
-        assertTrue(loginValidator.test("admin", "1234"));
-        assertFalse(loginValidator.test("admin", "wrong_pass"));
-        assertFalse(loginValidator.test("guest", "1234"));
+        Map<String, Integer> fruitMap = fruitList.stream()
+                .collect(Collectors.toMap(
+                        fruit -> fruit,
+                        String::length
+                ));
+
+        assertEquals(5, fruitMap.get("Apple"));
+        assertEquals(6, fruitMap.get("Banana"));
+        assertEquals(3, fruitMap.size());
     }
 
     @Test
-    void testNameFormatterWithBiFunction() {
-        BiFunction<String, String, String> formatter = (name, role) ->
-                String.format("%s (%s)", name.toUpperCase(), role);
+    void testStreamPipelineWithFindAny() {
+        List<Integer> values = Arrays.asList(5, 12, 8, 18, 20);
 
-        String result = formatter.apply("Alice", "Manager");
+        Optional<Integer> firstMatch = values.stream()
+                .filter(n -> n > 10)
+                .findFirst();
 
-        assertEquals("ALICE (Manager)", result);
+        assertTrue(firstMatch.isPresent());
+        assertEquals(12, firstMatch.get());
     }
 
 }
