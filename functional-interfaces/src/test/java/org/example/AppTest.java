@@ -16,7 +16,7 @@ public class AppTest
 {
     @Test
     void testFilterAndPredicates() {
-        List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David", "Edward");
+        List<String> names = Arrays.asList("Joao", "Maria", "Jose", "Daniel", "Eduardo", "Carlos");
 
         Predicate<String> startsWithCD = name -> name.startsWith("C") || name.startsWith("D");
         List<String> filtered = names.stream()
@@ -24,8 +24,8 @@ public class AppTest
                 .collect(Collectors.toList());
 
         assertEquals(2, filtered.size());
-        assertTrue(filtered.contains("Charlie"));
-        assertFalse(filtered.contains("Alice"));
+        assertTrue(filtered.contains("Carlos"));
+        assertFalse(filtered.contains("Joao"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AppTest
 
     @Test
     void testListToMapConversion() {
-        List<String> fruitList = Arrays.asList("Apple", "Banana", "Cherry");
+        List<String> fruitList = Arrays.asList("Apple", "Banana", "Orange");
 
         Map<String, Integer> fruitMap = fruitList.stream()
                 .collect(Collectors.toMap(
@@ -77,6 +77,27 @@ public class AppTest
 
         assertTrue(firstMatch.isPresent());
         assertEquals(12, firstMatch.get());
+    }
+
+    @Test
+    void testStreamSkip() {
+        List<Integer> values = Arrays.asList(5, 7, 15, 22, 24, 35, 44, 48, 60);
+
+        List<Integer> result = values.stream()
+                .skip(2)
+                .collect(Collectors.toList());
+
+        assertEquals(7, result.size());
+        assertFalse(result.contains(5));
+        assertFalse(result.contains(7));
+
+        result = values.stream()
+                .limit(7)
+                .collect(Collectors.toList());
+
+        assertEquals(7, result.size());
+        assertFalse(result.contains(48));
+        assertFalse(result.contains(60));
     }
 
 }
