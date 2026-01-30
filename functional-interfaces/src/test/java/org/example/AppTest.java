@@ -50,7 +50,6 @@ public class AppTest
         BiPredicate<String, String> loginValidator = (user, pass) ->
                 "admin".equals(user) && "1234".equals(pass);
 
-        // Assertions
         assertTrue(loginValidator.test("admin", "1234"));
         assertFalse(loginValidator.test("admin", "wrong_pass"));
         assertFalse(loginValidator.test("guest", "1234"));
