@@ -132,11 +132,10 @@ public class AppTest {
                 new Person("Maria", 13)
         );
 
-        // Grouping employees by their department
-        Map<Integer, List<Person>> byDept = personList.stream()
+        Map<Integer, List<Person>> byAge = personList.stream()
                 .collect(Collectors.groupingBy(Person::getAge));
 
-        assertEquals(2, byDept.get(12).size());
-        assertEquals(2, byDept.get(13).size());
+        assertEquals(2, byAge.get(12).size());
+        assertEquals(2, byAge.get(13).size());
     }
 }
