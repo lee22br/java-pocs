@@ -6,9 +6,6 @@ package org.example;
  */
 public class App 
 {
-
-    public static void main( String[] args )
-    {
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
         Callable<Integer> task = () -> {
