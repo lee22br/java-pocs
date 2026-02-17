@@ -11,7 +11,7 @@ public class App
 
     public static void main( String[] args )
     {
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
         Callable<Integer> task = () -> {
             System.out.println("Processing thread: " + Thread.currentThread().getName());
