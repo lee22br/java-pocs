@@ -76,7 +76,7 @@ public class AppTest {
             rwLock.writeLock().lock();
             try {
                 System.out.println("Writer: Updating data...");
-                Thread.sleep(500);
+                Thread.sleep(800);
                 syncCache.put("key1", "SafeValue");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
