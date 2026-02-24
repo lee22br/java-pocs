@@ -9,6 +9,6 @@ public class UserRepository {
     }
 
     public void save (User user){
-        //save
+        System.out.println("Saving user in DB...");
     }
 }
