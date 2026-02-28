@@ -24,9 +24,9 @@ public class AppTest {
     }
 
     @Test
-    @Disabled("Implementation pending")
+    @Disabled("Old Ignore - Implementation pending")
     void skippedTest() {
-        // This test won't run
+        System.out.println("This test won't run");
     }
 
     @AfterEach

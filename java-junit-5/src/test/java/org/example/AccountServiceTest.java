@@ -32,7 +32,6 @@ class AccountServiceTest {
                     InsufficientFundsException.class,
                     () -> service.withdraw(acc, 500.0)
             );
-
             assertTrue(exception.getMessage().contains("Shortfall of 400.0"));
         }
     }
