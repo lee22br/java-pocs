@@ -1,0 +1,87 @@
+KATA ARCh
+Camada Cliente:
+KMM: Kotlin Multiplatform Mobile
+	androidApp: Código específico Android (UI, atividades).
+	iosApp: Código específico iOS (Xcode, SwiftUI).
+	shared: O "coração" do projeto. Aqui fica o Kotlin que será transformado em um .jar para Android e um .framework para o iOS.
+
+Camada borda:
+CloudFront CDN para acelerar o carregamento de paginas (itens estáticos), como? distribuindo cópias dos seus arquivos em centenas de servidores espalhados pelo globo.
+	CloudFront identifica qual servidor de borda está fisicamente mais próximo desse usuário.
+AWS WAF: Firewall -> para filtrar tráfego malicioso antes mesmo dele chegar à sua infraestrutura. Proteção de DDos na camada 7
+	*AWS Shield: Proteção contra ataques DDoS camada 3 e 4
+
+Camada Gateway:
+ALB - Load Balance: Distribuindo as requisições para os servidores (dentro da region) Balanceador de Carga na camada 7: Como? ler o conteúdo da requisição toma a decisão baseado regras: Caminho (Path-based), Host (Host-based). Cabeçalhos HTTP e Métodos (get para um servidor, post para outro). Possui Health Checks
+API Gateway: recebe chamadas de API e as direciona para o lugar certo
+	verifica Autenticação e Autorização com AWS IAM ou Amazon Cognito ou 
+	consegue gerenciar o trafego definir limite de requisições de um mesmo usuário por segundo
+	Escalável: até milhões de chamadas por segundo automaticamente (logs detalhados no CloudWatch) e Cache
+
+Microserviços:
+Authentication: JWT (JSON Web Token) -based auth, session management 
+	Vantagem: Excelente para escalabilidade e microserviços. O servidor não precisa consultar banco de dados para saber quem você é; ele apenas valida a matemática da assinatura.
+	Desvantagem: Difícil de invalidar (so expirando ou lista negra)
+Vote Submission: High-throughput vote ingestion: sistema capaz de receber e processar uma quantidade massiva de dados (votos) em um curtíssimo espaço de tempo.
+Deduplication:  Ensures exactly-once voting per user
+
+
+ElastiCache Redis cluster mode with 3 shards, 2 replicas per shard: Shard particionamento (30Gb - cada um tera 10Gb) Replicas cada Shard tem um Node primario (recebe as escritas) e suas replicas copiam os dados do primario. Vantagem alivia os nos primarios direcionando as leituras paras replicas
+
+
+Managed Streaming for Apache Kafka: 3 Brokers (3 instancias simultaneas) separados em 3 AZs
+
+
+VPC Peering: É uma conexão de rede entre duas VPCs (Virtual Private Clouds) que permite que os recursos. Cross-Region (Inter-região) usado como DR (Disaster Recovery)
+
+Trade OFF 1 - Linguagem
+Native Compilation: código-fonte é traduzido diretamente para código de máquina específico do processador (binário)
+Para atingir uma vazão (throughput) de 250.000 requisições por segundo (RPS)
+
+Goroutine é um "thread leve" gerenciado pela runtime do Go (apenas 2Kb). Runtime do GO que gerencia essas thread e nao SO
+Channels: São canais de comunicação segura entre as Goroutines. Canais bloqueioam quem envia e quem recebe até estarem prontos
+
+
+Trade-off 2: Amazon EKS (Kubernetes) vs Amazon ECS
+Istio: se um serviço começar a falham, Istio corta a conexão para ele imediatamente (circuit breaking), Traffic Shifting: 1% do trafego para uma nova versão por exemplo.
+
+Prometheus: Banco de dados temporal, armazena informacoes que varia ao longo do tempo. monitoramento de sistemas altamente dinâmico
+HPA: Autoscalar horizontal (adiciona novas instancias-pods) 
+VPA: Autoscala vertical (adiciona mais CPU e Memoria)
+
+Multi-tenancy:Um cluster para varias aplicacoes. Namespace Isolation (separar apps, de um name space não interfere no outro) RBAC isolamento de acessos (baseado em funcoes)
+
+Trade-off 3: Aurora PostgreSQL vs Distributed SQL (CockroachDB/YugabyteDB)
+ACID : Atomicidade. Consistencia, Isolamento, Durabilidade
+
+Trade-off 4: ElastiCache Redis Cluster Mode vs Memcached
+HyperLogLog é um algoritmo probabilístico usado para estimar a cardinalidade (o número de elementos únicos) em conjuntos de dados massivos, usando uma quantidade ridiculamente pequena de memória. Como? Ele transforma o dado em um (Hash) e verifica em binario numero de zeros seguidos.
+Redis Database (RDB) cria um ponto de restauração a cada intervalo de tempo
+AOF (Append Only File): registra cada operação de escrita que o servidor recebe, uma por uma, em um arquivo de log.
+
+INCR: Race Condition, garante que quando 1 ou mais instancias chamarem o comando de incremeto do contador ao mesmo tempo, ele aumenta atomicamente.
+SETNX: Set if Not eXists: tenta gravar uma chave apenas se ela ainda não existir no Redis. apenas um worker processe específico por vez. A faz SETNX lock_id 1, ele "ganhou" a trava. Se o Processo B tentar o mesmo, ele recebe 0 e sabe que precisa esperar.
+Lua é uma linguagem de programação leve que
+
+
+Trade-off 5: Amazon MSK (Kafka) vs Amazon SQS/SNS
+
+Trade-off 6: REST + WebSockets vs gRPC
+
+Trade-off 7: In-House ML Model vs Fully Managed Security
+
+Trade-offs 8: Long Polling vs Websocket vs HTTP3/QUIC
+
+Trade-off 9: Web vs Mobile Native
+SSL Pinning (ou Certificate Pinning): App compara o certificado recebido com o que ele tem guardado internamente
+
+Compose Multiplatform (CMP) escreve interface de usuário um vez e ela pode ser executada no Android, iOS, Desktop
+linguagem usada é o Kotlin  KMM compartilha a logica de negocio.
+
+challenge_url: redireciona uma requisição suspeita para que ela prove que "é humana".
+
+Uma Idempotency Key (chave de idempotência) é um identificador único enviado pelo cliente para garantir que uma operação seja executada exatamente uma vez,
+
+vote:lock:{user_id}:{poll_id} : Evitar o Race Condition
+vote:dedupe:{user_id}:{poll_id}: você garante que "um homem, um voto
+vote:rate:{ip_address}: sua CPU e seus custos de AWS contra ataques de bots vindos de um único endereço IP

@@ -1,0 +1,1 @@
+# POC Java Functional Interfaces
