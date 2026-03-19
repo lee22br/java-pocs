@@ -42,4 +42,16 @@ public class Report implements Cloneable {
     public void setHeader(String header) {
         this.header = header;
     }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public List<String> getDataPoints() {
+        return dataPoints;
+    }
+
+    public void setDataPoints(List<String> dataPoints) {
+        this.dataPoints = dataPoints;
+    }
 }
