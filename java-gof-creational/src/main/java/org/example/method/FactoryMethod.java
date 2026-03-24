@@ -4,14 +4,14 @@ public class FactoryMethod {
 }
 
 /**
- * Product Interface
+ * Message Interface
  */
 interface Message {
     void send(String content);
 }
 
 /**
- * Concrete Products
+ * Concrete Message
  */
 class SmsMessage implements Message {
     @Override
@@ -31,7 +31,7 @@ class EmailMessage implements Message {
  * Creator Class (The Factory)
  */
 abstract class Notifier {
-    // This is the Factory Method
+    // The Factory Method
     public abstract Message createMessage();
 
     public void processNotification(String text) {
