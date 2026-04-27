@@ -12,6 +12,10 @@ public class ClusterMetrics {
         this.memoryUsage = memoryUsage;
     }
 
+    public boolean isCritical() {
+        return cpuUsage > 90.0 || memoryUsage > 90.0;
+    }
+
     public String getNodeId() {
         return nodeId;
     }
