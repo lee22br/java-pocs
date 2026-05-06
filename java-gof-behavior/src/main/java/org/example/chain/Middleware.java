@@ -19,8 +19,7 @@ public abstract class Middleware {
     public abstract boolean check(HttpRequest request);
 
     /**
-     * Runs check on the next object in chain or ends traversing if we're in
-     * the last object in chain.
+     * check the next object in chain or end
      */
     protected boolean checkNext(HttpRequest request) {
         if (next == null) {
